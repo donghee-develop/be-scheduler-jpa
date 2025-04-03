@@ -9,6 +9,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.Objects;
 
 @Slf4j
 @Component
@@ -20,7 +22,7 @@ public class CustomAuthFilter extends OncePerRequestFilter {
 
         log.info("Method : {}, URI : {}", requestMethod, requestURI);
 
-        if (requestURI.startsWith("/api")) {
+        if (requestURI.startsWith("/api/users") || Objects.equals(requestMethod, "POST")) {
             filterChain.doFilter(request, response);
             return;
         }

@@ -33,4 +33,7 @@ public class User {
     @JsonManagedReference
     @OneToMany(mappedBy = "user")
     private List<Schedule> schedules;
+//    동시성 제어
+//    @Version
+//    private Integer version;
 }

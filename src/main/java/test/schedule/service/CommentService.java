@@ -17,6 +17,7 @@ import test.schedule.repository.ScheduleRepository;
 import test.schedule.repository.UserRepository;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -33,7 +34,9 @@ public class CommentService {
                 .orElseThrow(() -> NotFoundException.of("스케줄"));
         List<Comment> comments = commentRepository.findBySchedule(schedule);
 
-        return comments.stream()
+        return Optional.ofNullable(commentRepository.findBySchedule(schedule))
+                .orElseGet(List::of)
+                .stream()
                 .map(GetCommentResDTO::from)
                 .collect(Collectors.toList());
     }

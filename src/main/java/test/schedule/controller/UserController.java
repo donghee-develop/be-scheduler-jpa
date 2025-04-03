@@ -31,9 +31,8 @@ public class UserController {
     @PostMapping("/logout")
     public ResponseEntity<Void> logoutUser(HttpServletRequest request) {
         HttpSession session = request.getSession(false);
-        if (session != null) {
-            session.invalidate();
-        }
+        session.invalidate();
+
         return ResponseEntity.ok().build();
     }
 
@@ -62,8 +61,9 @@ public class UserController {
         // 아이디만 받기 때문에 세션에 있는 아이디를 받아서 삭제
         HttpSession session = request.getSession(false);
         UserDTO loginUser = (UserDTO) session.getAttribute("user");
-        session.invalidate();
         userService.deleteUser(loginUser.getUserId());
+        session.invalidate();
+
         return ResponseEntity.ok().build();
     }
 }

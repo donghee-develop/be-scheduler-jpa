@@ -27,7 +27,7 @@ DB : mysql 8.0.36, JPA
 
 ERD 설계 : https://www.erdcloud.com/d/Q3ZTnSSAXxtr52o4Y
 
-API 명세 : 
+API 명세 : https://documenter.getpostman.com/view/25938596/2sB2cSiPgm#8d65e805-5f1d-4ec8-afd1-b2fcebbabbf6
 
 프론트 GitHub : 
 

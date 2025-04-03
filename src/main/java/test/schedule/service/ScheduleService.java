@@ -31,6 +31,7 @@ public class ScheduleService {
 
     @Transactional
     public void saveSchedule(PostScheduleReqDTO postScheduleReqDTO, Long userId) {
+        // 예외는 안뜸 세션에서 처리함
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> NotFoundException.of("유저"));
 
