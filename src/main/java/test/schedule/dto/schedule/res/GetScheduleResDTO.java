@@ -15,8 +15,9 @@ public class GetScheduleResDTO {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private String name;
+    private int commentCount;
 
-    public static GetScheduleResDTO from(Schedule schedule) {
+    public static GetScheduleResDTO from(Schedule schedule,int commentCount) {
         GetScheduleResDTO dto = new GetScheduleResDTO();
         dto.setId(schedule.getId());
         dto.setTitle(schedule.getTitle());
@@ -24,6 +25,7 @@ public class GetScheduleResDTO {
         dto.setCreatedAt(schedule.getCreatedAt());
         dto.setUpdatedAt(schedule.getUpdatedAt());
         dto.setName(schedule.getUser().getName());
+        dto.setCommentCount(schedule.getComments().size());
         return dto;
     }
 }

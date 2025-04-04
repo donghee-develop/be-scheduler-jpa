@@ -49,7 +49,7 @@ public class ScheduleController {
             @PathVariable Long id
     ){
         Schedule schedule = scheduleService.getScheduleById(id);
-        return ResponseEntity.ok(GetScheduleResDTO.from(schedule));
+        return ResponseEntity.ok(GetScheduleResDTO.from(schedule,0));
     }
     @PutMapping
     public ResponseEntity<Void> putSchedule(

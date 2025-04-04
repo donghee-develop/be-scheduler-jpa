@@ -25,8 +25,15 @@ public class ScheduleService {
     private final CommentRepository commentRepository;
 
     public Page<GetScheduleResDTO> searchSchedules(String keyword, Pageable pageable) {
-        return scheduleRepository.findByContentContaining(keyword, pageable)
-                .map(GetScheduleResDTO::from);
+        Page<Schedule> schedules = scheduleRepository.findByContentContaining(keyword, pageable);
+
+        return schedules.map(schedule -> {
+            int commentCount = commentRepository.findCommentsCountByScheduleId(schedule.getId());
+            return GetScheduleResDTO.from(schedule, commentCount);
+        });
+
+//        return scheduleRepository.findByContentContaining(keyword, pageable)
+//                .map(GetScheduleResDTO::from);
     }
 
     @Transactional
