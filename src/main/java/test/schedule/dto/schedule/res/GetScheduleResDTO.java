@@ -15,27 +15,24 @@ public class GetScheduleResDTO {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private String name;
-    private int commentCount;
+    private Integer commentCount;
 
-    public static GetScheduleResDTO from(Schedule schedule,int commentCount) {
-        GetScheduleResDTO dto = new GetScheduleResDTO();
-        dto.setId(schedule.getId());
-        dto.setTitle(schedule.getTitle());
-        dto.setContent(schedule.getContent());
-        dto.setCreatedAt(schedule.getCreatedAt());
-        dto.setUpdatedAt(schedule.getUpdatedAt());
-        dto.setName(schedule.getUser().getName());
-        dto.setCommentCount(schedule.getComments().size());
+    private GetScheduleResDTO(Schedule schedule) {
+        this.id = schedule.getId();
+        this.title = schedule.getTitle();
+        this.content = schedule.getContent();
+        this.createdAt = schedule.getCreatedAt();
+        this.updatedAt = schedule.getUpdatedAt();
+        this.name = schedule.getUser().getName();
+    }
+
+    public static GetScheduleResDTO from(Schedule schedule, Integer commentCount) {
+        GetScheduleResDTO dto = new GetScheduleResDTO(schedule);
+        dto.commentCount = commentCount;
         return dto;
     }
+
     public static GetScheduleResDTO from(Schedule schedule) {
-        GetScheduleResDTO dto = new GetScheduleResDTO();
-        dto.setId(schedule.getId());
-        dto.setTitle(schedule.getTitle());
-        dto.setContent(schedule.getContent());
-        dto.setCreatedAt(schedule.getCreatedAt());
-        dto.setUpdatedAt(schedule.getUpdatedAt());
-        dto.setName(schedule.getUser().getName());
-        return dto;
+        return new GetScheduleResDTO(schedule);
     }
 }
