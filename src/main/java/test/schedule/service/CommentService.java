@@ -7,6 +7,8 @@ import test.schedule.dto.comment.req.DeleteCommentReqDTO;
 import test.schedule.dto.comment.req.PostCommentReqDTO;
 import test.schedule.dto.comment.req.PutCommentReqDTO;
 import test.schedule.dto.comment.res.GetCommentResDTO;
+import test.schedule.dto.comment.res.PostCommentResDTO;
+import test.schedule.dto.comment.res.PutCommentResDTO;
 import test.schedule.entity.Comment;
 import test.schedule.entity.Schedule;
 import test.schedule.entity.User;
@@ -42,7 +44,7 @@ public class CommentService {
     }
 
     @Transactional
-    public GetCommentResDTO saveComment(PostCommentReqDTO postCommentReqDTO, Long userId) {
+    public PostCommentResDTO saveComment(PostCommentReqDTO postCommentReqDTO, Long userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> NotFoundException.of("유저"));
 
@@ -56,11 +58,11 @@ public class CommentService {
 
         Comment savedComment = commentRepository.save(comment);
 
-        return GetCommentResDTO.from(savedComment);
+        return PostCommentResDTO.from(savedComment);
     }
 
     @Transactional
-    public void updateByScheduleId(PutCommentReqDTO putCommentReqDTO, Long userId) {
+    public PutCommentResDTO updateByScheduleId(PutCommentReqDTO putCommentReqDTO, Long userId) {
         Comment comment = commentRepository.findById(putCommentReqDTO.getId())
                 .orElseThrow(() -> NotFoundException.of("댓글"));
 
@@ -68,6 +70,8 @@ public class CommentService {
             throw new UnauthorizedAccessException();
         }
         comment.setContent(putCommentReqDTO.getContent());
+        Comment saveComment = commentRepository.save(comment);
+        return PutCommentResDTO.from(saveComment);
     }
     @Transactional
     public void deleteByScheduleId(DeleteCommentReqDTO deleteCommentReqDTO, Long userId) {

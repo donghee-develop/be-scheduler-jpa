@@ -11,6 +11,8 @@ import test.schedule.dto.comment.req.DeleteCommentReqDTO;
 import test.schedule.dto.comment.req.PostCommentReqDTO;
 import test.schedule.dto.comment.req.PutCommentReqDTO;
 import test.schedule.dto.comment.res.GetCommentResDTO;
+import test.schedule.dto.comment.res.PostCommentResDTO;
+import test.schedule.dto.comment.res.PutCommentResDTO;
 import test.schedule.dto.user.security.UserDTO;
 import test.schedule.service.CommentService;
 
@@ -29,25 +31,25 @@ public class CommentController {
         return commentService.getCommentsByScheduleId(id);
     }
     @PostMapping
-    public ResponseEntity<GetCommentResDTO> postComment(
+    public ResponseEntity<PostCommentResDTO> postComment(
             HttpServletRequest request,
             @Valid @RequestBody PostCommentReqDTO postCommentReqDTO
     ){
         HttpSession session = request.getSession(false);
         UserDTO loginUser = (UserDTO) session.getAttribute("user");
 
-        GetCommentResDTO savedComment = commentService.saveComment(postCommentReqDTO, loginUser.getUserId());
+        PostCommentResDTO savedComment = commentService.saveComment(postCommentReqDTO, loginUser.getUserId());
         return new ResponseEntity<>(savedComment, HttpStatus.OK);
     }
     @PutMapping
-    public ResponseEntity<Void> updateComment(
+    public ResponseEntity<PutCommentResDTO> updateComment(
             HttpServletRequest request,
             @Valid @RequestBody PutCommentReqDTO putCommentReqDTO
     ){
         HttpSession session = request.getSession(false);
         UserDTO loginUser = (UserDTO) session.getAttribute("user");
-        commentService.updateByScheduleId(putCommentReqDTO,loginUser.getUserId());
-        return ResponseEntity.ok().build();
+        PutCommentResDTO savedComment = commentService.updateByScheduleId(putCommentReqDTO,loginUser.getUserId());
+        return new ResponseEntity<>(savedComment, HttpStatus.OK);
     }
     @DeleteMapping
     public ResponseEntity<Void> deleteComment(
