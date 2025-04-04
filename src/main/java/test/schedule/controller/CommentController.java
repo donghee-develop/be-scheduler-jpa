@@ -4,6 +4,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import test.schedule.dto.comment.req.DeleteCommentReqDTO;
@@ -28,15 +29,15 @@ public class CommentController {
         return commentService.getCommentsByScheduleId(id);
     }
     @PostMapping
-    public ResponseEntity<Void> postComment(
+    public ResponseEntity<GetCommentResDTO> postComment(
             HttpServletRequest request,
             @Valid @RequestBody PostCommentReqDTO postCommentReqDTO
     ){
         HttpSession session = request.getSession(false);
         UserDTO loginUser = (UserDTO) session.getAttribute("user");
 
-        commentService.saveComment(postCommentReqDTO,loginUser.getUserId());
-        return ResponseEntity.ok().build();
+        GetCommentResDTO savedComment = commentService.saveComment(postCommentReqDTO, loginUser.getUserId());
+        return new ResponseEntity<>(savedComment, HttpStatus.OK);
     }
     @PutMapping
     public ResponseEntity<Void> updateComment(

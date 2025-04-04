@@ -42,7 +42,7 @@ public class CommentService {
     }
 
     @Transactional
-    public void saveComment(PostCommentReqDTO postCommentReqDTO, Long userId) {
+    public GetCommentResDTO saveComment(PostCommentReqDTO postCommentReqDTO, Long userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> NotFoundException.of("유저"));
 
@@ -54,7 +54,9 @@ public class CommentService {
         comment.setSchedule(schedule);
         comment.setUser(user);
 
-        commentRepository.save(comment);
+        Comment savedComment = commentRepository.save(comment);
+
+        return GetCommentResDTO.from(savedComment);
     }
 
     @Transactional
