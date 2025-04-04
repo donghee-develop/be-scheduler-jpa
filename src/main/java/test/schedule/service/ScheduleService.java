@@ -32,8 +32,6 @@ public class ScheduleService {
             return GetScheduleResDTO.from(schedule, commentCount);
         });
 
-//        return scheduleRepository.findByContentContaining(keyword, pageable)
-//                .map(GetScheduleResDTO::from);
     }
 
     @Transactional

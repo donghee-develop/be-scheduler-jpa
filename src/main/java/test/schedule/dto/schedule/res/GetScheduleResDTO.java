@@ -28,4 +28,14 @@ public class GetScheduleResDTO {
         dto.setCommentCount(schedule.getComments().size());
         return dto;
     }
+    public static GetScheduleResDTO from(Schedule schedule) {
+        GetScheduleResDTO dto = new GetScheduleResDTO();
+        dto.setId(schedule.getId());
+        dto.setTitle(schedule.getTitle());
+        dto.setContent(schedule.getContent());
+        dto.setCreatedAt(schedule.getCreatedAt());
+        dto.setUpdatedAt(schedule.getUpdatedAt());
+        dto.setName(schedule.getUser().getName());
+        return dto;
+    }
 }
